@@ -17,8 +17,9 @@ struct Data
 struct information
 {
 	char title[Size];
-	char country[Size];
 	char colour[Size];
+	char cpu[Size]; 
+	char mem[Size];	
 	char price[Size];
 	Data was_made;
 	char weight[Size];
@@ -62,7 +63,7 @@ user getUser(); authorization get_registr(); void findUser(FILE* users, user _us
 int main()
 {
 	setlocale(0, "Russian");
-	system("COLOR F5");
+
 	int first_answer, a; FILE* users; user _user, now;
 	now.counter_basket = 0;
 	now.price = 0;
@@ -196,7 +197,7 @@ int main()
 						// system("pause");
 						do
 						{
-							if ((strncmp(product.title, s1, strlen(product.title)) == 0) && (strncmp(product.country, s2, strlen(product.country))) == 0)
+							if ((strncmp(product.title, s1, strlen(product.title)) == 0) && (strncmp(product.cpu, s2, strlen(product.cpu))) == 0)
 							{
 								change = true;
 								break;
@@ -570,7 +571,7 @@ int main()
 							{
 							case 0:
 							{
-								cout << "Вы оформили заказ на сумму " << now.price << " гривен" << endl << endl;
+								cout << "Вы оформили заказ на сумму " << now.price << endl << endl;
 								cout << "Спасибо за покупку, приходите еще!" << endl << endl;
 
 								users = fopen("users.txt", "rb+");
@@ -622,13 +623,11 @@ int main()
 void output(information product)
 {
 	cout << "                Название : \t" << product.title << endl;
-	cout << "     Страна производства : \t" << product.country << endl;
+	cout << "		     Mem : \t" << product.mem << endl;
+	cout << "		     Cpu : \t" << product.cpu << endl;
 	cout << "                    Цвет : \t" << product.colour << endl;
 	cout << "                     Цена: \t" << product.price << endl;
-	cout << "        Дата производства: \n";
-	cout << "                -  Число : \t" << product.was_made.day << endl;
-	cout << "                -  Месяц : \t" << product.was_made.month << endl;
-	cout << "                -    Год : \t" << product.was_made.year << endl;
+	cout << "        Дата производства:      " << product.was_made.day <<"/" << product.was_made.month << "/" << product.was_made.year<<" \n";
 	cout << "                     Вес : \t" << product.weight << endl;
 	cout << "                Гарантия : \t" << product.warranty << endl;
 	cout << "            Номер товара : \t" << product.id << endl;
@@ -683,8 +682,11 @@ information getProduct()
 	cout << "                   Название : \t";
 	cin.getline(product.title, Size);
 
-	cout << "        Страна производства : \t";
-	cin.getline(product.country, Size);
+	cout << "                        mem : \t";
+	cin.getline(product.mem, Size);
+
+	cout << "						 Cpu : \t";
+	cin.getline(product.cpu, Size);
 
 	cout << "                       Цвет : \t";
 	cin.getline(product.colour, Size);
@@ -722,9 +724,13 @@ information changeProduct(information product)
 	cin.getline(s, Size);
 	if (*s != '\0')  strcpy(product.title, s);
 
-	cout << "           Страна производства : \t";
+	cout << "                            Mem: \t";
 	cin.getline(s, Size);
-	if (*s != '\0')  strcpy(product.country, s);
+	if (*s != '\0')  strcpy(product.mem, s);
+
+	cout << "                           Cpu : \t";
+	cin.getline(s, Size);
+	if (*s != '\0')  strcpy(product.cpu, s);
 
 	cout << "                          Цвет : \t";
 	cin.getline(s, Size);
@@ -863,7 +869,8 @@ void findProduct(FILE * my, FILE * users, information product, information odd, 
 bool compare(information product, information odd)
 {
 	return((!strcmp(product.title, odd.title) || (*odd.title == '\0')) &&
-		(!strcmp(product.country, odd.country) || (*odd.country == '\0')) &&
+		(!strcmp(product.cpu, odd.cpu) || (*odd.cpu == '\0')) &&
+		(!strcmp(product.mem, odd.mem) || (*odd.mem == '\0')) &&
 		(!strcmp(product.was_made.day, odd.was_made.day) || (*odd.was_made.day == '\0')) &&
 		(!strcmp(product.was_made.month, odd.was_made.month) || (*odd.was_made.month == '\0')) &&
 		(!strcmp(product.was_made.year, odd.was_made.year) || (*odd.was_made.year == '\0')) &&
